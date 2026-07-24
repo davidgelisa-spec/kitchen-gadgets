@@ -16,7 +16,7 @@ const year = new Date().getFullYear();
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
 
-const SITE_URL = 'https://kitchen-gadgets.pages.dev';
+const SITE_URL = 'https://kitchen-gadgets-1cp.pages.dev';
 const canonical = new URL(path, SITE_URL).href;
 const ogImage = new URL('/og.png', SITE_URL).href;
 ---
@@ -46,7 +46,7 @@ const ogImage = new URL('/og.png', SITE_URL).href;
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'Bright Picks — Kitchen Gadgets',
-      url: 'https://kitchen-gadgets.pages.dev',
+      url: 'https://kitchen-gadgets-1cp.pages.dev',
     })} />
     <style is:global>
       :root {

@@ -4,7 +4,7 @@
 // the site is built from this file, so the tag lives in exactly one place.
 //
 // ✅ Live, approved Amazon Associates UK tag.
-export const ASSOCIATES_TAG = 'brightpicks26-21';
+export const ASSOCIATES_TAG = 'kitchengadgetsuk-21';
 
 const AMAZON_UK = 'https://www.amazon.co.uk';
 

@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { CATEGORIES } from '../lib/categories';
 import { buildDate } from '../lib/freshness';
 
-const base = 'https://kitchen-gadgets.pages.dev';
+const base = 'https://kitchen-gadgets-1cp.pages.dev';
 
 export const GET: APIRoute = () => {
   const lastmod = buildDate();

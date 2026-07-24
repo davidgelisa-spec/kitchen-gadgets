@@ -12,7 +12,7 @@ export const NETWORK: NetworkSite[] = [
   { key: 'best-bargain-picks', name: 'Best Bargain Picks', url: 'https://best-bargain-picks.pages.dev', tagline: 'Daily Amazon UK deals' },
   { key: 'budget-home-office', name: 'Budget Home Office', url: 'https://budget-home-office.pages.dev', tagline: 'Home-office gear under £50' },
   { key: 'deals-aggregator', name: 'UK Deals & Vouchers', url: 'https://deals-aggregator.pages.dev', tagline: "Today's best UK deals" },
-  { key: 'kitchen-gadgets', name: 'Kitchen Gadgets', url: 'https://kitchen-gadgets.pages.dev', tagline: 'Budget kitchen gadget reviews' },
+  { key: 'kitchen-gadgets', name: 'Kitchen Gadgets', url: 'https://kitchen-gadgets-1cp.pages.dev', tagline: 'Budget kitchen gadget reviews' },
   { key: 'product-comparison', name: 'Product Comparison', url: 'https://product-comparison-6df.pages.dev', tagline: 'Side-by-side comparisons' },
 ];
 
