@@ -2,6 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 import { CATEGORIES } from '../lib/categories';
 import { icon } from '../lib/icons';
+import { weeklyRotate, updatedLabel } from '../lib/freshness';
+
+// Reorder the category grid each week so the homepage stays fresh (roadmap §3).
+const categoriesThisWeek = weeklyRotate(CATEGORIES);
+const updated = updatedLabel();
 ---
 
 <Layout title="Bright Picks — Budget Kitchen Gadget Reviews" description="Honest, budget-friendly reviews of the best kitchen gadgets — air fryers, blenders, coffee machines, timers and organisers.">
@@ -10,13 +15,14 @@ import { icon } from '../lib/icons';
       <span class="eyebrow">Bright Picks · Kitchen</span>
       <h1>The best budget kitchen gadgets, without the guesswork.</h1>
       <p class="lead">We do the digging so you don't have to — clear, no-nonsense picks for the gadgets that actually earn their place on your worktop. Updated regularly, always honest about the trade-offs.</p>
+      <p class="updated">Picks reviewed and reordered weekly · <b>Last updated {updated}</b></p>
     </div>
   </section>
 
   <section class="pad">
     <div class="wrap">
       <div class="cat-grid">
-        {CATEGORIES.map((c) => (
+        {categoriesThisWeek.map((c) => (
           <a class="cat-card" href={`/category/${c.slug}/`}>
             <span class="ico"><Fragment set:html={icon(c.icon)} /></span>
             <h3>{c.name}</h3>

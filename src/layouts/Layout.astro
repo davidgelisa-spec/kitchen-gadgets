@@ -1,6 +1,7 @@
 ---
 import { CATEGORIES } from '../lib/categories';
 import { icon } from '../lib/icons';
+import { sisterSites } from '../lib/network';
 
 interface Props {
   title: string;
@@ -14,6 +15,10 @@ const {
 const year = new Date().getFullYear();
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+
+const SITE_URL = 'https://kitchen-gadgets.pages.dev';
+const canonical = new URL(path, SITE_URL).href;
+const ogImage = new URL('/og.png', SITE_URL).href;
 ---
 
 <html lang="en">
@@ -22,11 +27,20 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={new URL(path, 'https://kitchen-gadgets.pages.dev').href} />
+    <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Bright Picks — Kitchen Gadgets" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Bright Picks — Kitchen Gadgets" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='20' font-size='20'>🍳</text></svg>" />
     <script type="application/ld+json" is:inline set:html={JSON.stringify({
       '@context': 'https://schema.org',
@@ -86,6 +100,8 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
       .hero { background: linear-gradient(180deg, var(--accent-soft), var(--bg)); border-bottom: 1px solid var(--border); }
       .hero .wrap { padding-top: 56px; padding-bottom: 48px; }
       .eyebrow { display: inline-block; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent-dark); background: #fff; border: 1px solid var(--border); padding: 5px 11px; border-radius: 999px; margin-bottom: 16px; }
+      .updated { font-size: .85rem; color: var(--muted); margin-top: 14px; }
+      .updated b { color: var(--accent-dark); }
 
       /* Category grid */
       .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
@@ -129,6 +145,15 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
       .foot-links a:hover { color: var(--accent-dark); }
       .copyright { margin: 14px 0 0; font-size: .85rem; color: var(--muted); }
 
+      /* Network cross-links */
+      .network { margin: 24px 0 0; border-top: 1px solid var(--border); padding-top: 20px; }
+      .network-label { display: block; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 12px; }
+      .network ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+      .network a { display: flex; flex-direction: column; gap: 1px; text-decoration: none; color: var(--ink); background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 13px; transition: border-color .12s ease, background .12s ease; }
+      .network a:hover { border-color: var(--accent); background: var(--accent-soft); }
+      .network a b { font-size: .92rem; font-weight: 700; }
+      .network a span { font-size: .8rem; color: var(--muted); }
+
       @media (max-width: 560px) {
         body { font-size: 16px; }
         .pick { grid-template-columns: 1fr; }
@@ -169,6 +194,14 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
           <a href="/contact/">Contact</a>
           <a href="/disclosure/">Disclosure</a>
           <a href="/privacy/">Privacy</a>
+        </nav>
+        <nav class="network" aria-label="More from the Bright Picks network">
+          <span class="network-label">More from Bright Picks</span>
+          <ul>
+            {sisterSites.map((s) => (
+              <li><a href={s.url} rel="noopener"><b>{s.name}</b><span>{s.tagline}</span></a></li>
+            ))}
+          </ul>
         </nav>
         <p class="copyright">© {year} Bright Picks. Prices and availability may change — always check on Amazon before buying.</p>
       </div>
