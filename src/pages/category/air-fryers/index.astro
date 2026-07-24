@@ -1,0 +1,44 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import ProductPicks from '../../../components/ProductPicks.astro';
+import type { Product } from '../../../components/ProductPicks.astro';
+
+const products: Product[] = [
+  {
+    name: 'Ninja Air Fryer AF100UK',
+    badge: 'Best overall',
+    rating: 4.7,
+    blurb: 'The one most people should buy. A 3.8L drawer crisps chips and wings evenly, heats fast, and the non-stick basket rinses clean in seconds.',
+    pros: ['3.8L — feeds 1–3', 'Even, fast crisping', 'Dishwasher-safe basket'],
+    query: 'Ninja Air Fryer AF100UK',
+  },
+  {
+    name: 'Tower T17021 Vortx',
+    badge: 'Best value',
+    rating: 4.4,
+    blurb: 'A no-frills 4L fryer that does the important thing well for noticeably less money. A simple dial, a roomy basket and reliable results.',
+    pros: ['4L capacity', 'Lowest price here', 'Dial controls — no fuss'],
+    query: 'Tower T17021 Vortx air fryer 4L',
+  },
+  {
+    name: 'COSORI Lite 3.8L',
+    badge: 'Quietest',
+    rating: 4.5,
+    blurb: 'Runs quieter than most and looks tidy on a worktop. Handy one-touch presets if you like it simple — no app or subscription in sight.',
+    pros: ['Low noise', 'One-touch presets', 'Compact footprint'],
+    query: 'COSORI Lite 3.8L air fryer',
+  },
+];
+---
+
+<Layout title="Best Budget Air Fryers (UK)" description="The best budget air fryers for UK kitchens — picks for even crisping, easy cleaning and small worktops.">
+  <section class="pad">
+    <div class="wrap prose">
+      <p class="breadcrumb"><a href="/">Home</a> · Air Fryers</p>
+      <h1>Best budget air fryers</h1>
+      <p class="lead">An air fryer is the fastest route to crispy food with a fraction of the oil. These three hit the sweet spot of price, capacity and easy cleaning for a typical home kitchen.</p>
+      <ProductPicks products={products} />
+      <p class="note">Prices and availability change often. Always double-check the current price and delivery options on Amazon before buying.</p>
+    </div>
+  </section>
+</Layout>

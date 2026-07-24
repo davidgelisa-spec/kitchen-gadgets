@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kitchen-gadgets.pages.dev/sitemap.xml

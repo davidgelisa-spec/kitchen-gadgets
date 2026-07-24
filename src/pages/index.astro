@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { CATEGORIES } from '../lib/categories';
+import { icon } from '../lib/icons';
+---
+
+<Layout title="Bright Picks — Budget Kitchen Gadget Reviews" description="Honest, budget-friendly reviews of the best kitchen gadgets — air fryers, blenders, coffee machines, timers and organisers.">
+  <section class="hero">
+    <div class="wrap prose">
+      <span class="eyebrow">Bright Picks · Kitchen</span>
+      <h1>The best budget kitchen gadgets, without the guesswork.</h1>
+      <p class="lead">We do the digging so you don't have to — clear, no-nonsense picks for the gadgets that actually earn their place on your worktop. Updated regularly, always honest about the trade-offs.</p>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div class="wrap">
+      <div class="cat-grid">
+        {CATEGORIES.map((c) => (
+          <a class="cat-card" href={`/category/${c.slug}/`}>
+            <span class="ico"><Fragment set:html={icon(c.icon)} /></span>
+            <h3>{c.name}</h3>
+            <p>{c.tagline}</p>
+            <span class="go">See our picks →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="wrap prose">
+      <h2>How we choose</h2>
+      <p>Every roundup weighs the things that matter for a home kitchen — real-world performance, ease of cleaning, how much space it eats, and whether the price makes sense. We favour gadgets that are genuinely useful over gimmicks, and we always tell you who a pick is <em>not</em> for.</p>
+      <p>Prices and availability on Amazon change constantly, so we link you straight to the current listing rather than quoting a figure that goes stale. <a href="/disclosure/">Here's how our affiliate links work</a>.</p>
+    </div>
+  </section>
+</Layout>

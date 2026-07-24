@@ -1,0 +1,44 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import ProductPicks from '../../../components/ProductPicks.astro';
+import type { Product } from '../../../components/ProductPicks.astro';
+
+const products: Product[] = [
+  {
+    name: 'ThermoPro TM01 Digital Timer',
+    badge: 'Best overall',
+    rating: 4.7,
+    blurb: 'A big, clear display, a loud alarm you\'ll actually hear over an extractor fan, and a magnetic back plus a clip and stand so it sticks wherever you need it.',
+    pros: ['Loud alarm', 'Magnet, clip & stand', 'Large easy-read screen'],
+    query: 'ThermoPro TM01 kitchen timer',
+  },
+  {
+    name: 'Taylor Pro Mechanical Timer',
+    badge: 'No batteries',
+    rating: 4.4,
+    blurb: 'Wind it and go. A classic mechanical dial that never needs a battery and survives being dropped — the one to buy if you hate faff.',
+    pros: ['Zero batteries', 'Simple wind dial', 'Nearly indestructible'],
+    query: 'Taylor Pro mechanical kitchen timer',
+  },
+  {
+    name: 'Digital Triple Kitchen Timer',
+    badge: 'Best for multitasking',
+    rating: 4.3,
+    blurb: 'Three countdowns at once — eggs, oven and hob without the mental juggling. Cheap, cheerful and genuinely useful on a busy Sunday roast.',
+    pros: ['Times 3 things at once', 'Very affordable', 'Magnetic back'],
+    query: 'triple digital kitchen timer',
+  },
+];
+---
+
+<Layout title="Best Kitchen Timers (UK)" description="The best kitchen timers — loud, clear and reliable picks from digital multi-timers to no-battery mechanical dials.">
+  <section class="pad">
+    <div class="wrap prose">
+      <p class="breadcrumb"><a href="/">Home</a> · Kitchen Timers</p>
+      <h1>Best kitchen timers</h1>
+      <p class="lead">A good timer is the cheapest upgrade your cooking will ever get. Loud enough to hear, clear enough to read at a glance — here are three that get it right.</p>
+      <ProductPicks products={products} />
+      <p class="note">Prices and availability change often. Always double-check the current price and delivery options on Amazon before buying.</p>
+    </div>
+  </section>
+</Layout>

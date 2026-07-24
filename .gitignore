@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+*.log
+# iCloud sync duplicates (" 2" files)
+* 2.*
+.claude/settings.local.json

@@ -1,0 +1,38 @@
+---
+import { amazonSearch } from '../lib/affiliate';
+
+export interface Product {
+  name: string;
+  badge?: string;
+  rating: number;
+  blurb: string;
+  pros: string[];
+  query: string; // Amazon search query for the affiliate link
+}
+interface Props { products: Product[]; }
+const { products } = Astro.props;
+
+function stars(rating: number): string {
+  const full = Math.floor(rating);
+  const half = rating - full >= 0.5;
+  return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(5 - full - (half ? 1 : 0));
+}
+---
+
+<ol class="picks">
+  {products.map((p, i) => (
+    <li class="pick">
+      <div class={`rank${i === 0 ? '' : ' alt'}`}>{i + 1}</div>
+      <div class="pick-head">
+        <h3>{p.name}</h3>
+        {p.badge && <span class="badge">{p.badge}</span>}
+      </div>
+      <div class="rating">{stars(p.rating)} <span>{p.rating.toFixed(1)} / 5</span></div>
+      <p class="blurb">{p.blurb}</p>
+      <ul class="pros">
+        {p.pros.map((pro) => <li>{pro}</li>)}
+      </ul>
+      <a class="btn" href={amazonSearch(p.query)} rel="sponsored nofollow noopener" target="_blank">Check price on Amazon</a>
+    </li>
+  ))}
+</ol>

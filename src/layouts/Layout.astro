@@ -1,0 +1,177 @@
+---
+import { CATEGORIES } from '../lib/categories';
+import { icon } from '../lib/icons';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const {
+  title,
+  description = 'Bright Picks — honest, budget-friendly reviews of the best kitchen gadgets.',
+} = Astro.props;
+
+const year = new Date().getFullYear();
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(path, 'https://kitchen-gadgets.pages.dev').href} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='20' font-size='20'>🍳</text></svg>" />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Bright Picks — Kitchen Gadgets',
+      url: 'https://kitchen-gadgets.pages.dev',
+    })} />
+    <style is:global>
+      :root {
+        --bg: #fffdf9;
+        --surface: #ffffff;
+        --ink: #23201c;
+        --muted: #6f6a63;
+        --accent: #e8590c;
+        --accent-dark: #c2410c;
+        --accent-soft: #fff2e8;
+        --border: #ece6dc;
+        --star: #f5a524;
+        --radius: 14px;
+        --shadow: 0 1px 2px rgba(35, 32, 28, .04), 0 8px 24px rgba(35, 32, 28, .06);
+        --wrap: 68rem;
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        font-size: 17px;
+      }
+      a { color: var(--accent-dark); }
+      img { max-width: 100%; height: auto; }
+      .wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 20px; }
+
+      /* Header */
+      .site-header { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; }
+      .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; flex-wrap: wrap; }
+      .brand { display: inline-flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.15rem; letter-spacing: -.02em; color: var(--ink); text-decoration: none; }
+      .brand svg { width: 22px; height: 22px; color: var(--accent); }
+      .brand span b { color: var(--accent); }
+      nav.main { display: flex; flex-wrap: wrap; gap: 4px; }
+      nav.main a { color: var(--muted); text-decoration: none; font-size: .93rem; font-weight: 600; padding: 7px 11px; border-radius: 8px; white-space: nowrap; }
+      nav.main a:hover { color: var(--ink); background: var(--accent-soft); }
+      nav.main a[aria-current] { color: var(--accent-dark); background: var(--accent-soft); }
+
+      /* Main + typography */
+      main { display: block; }
+      .prose h1 { font-size: clamp(1.8rem, 1.2rem + 2.4vw, 2.6rem); line-height: 1.15; letter-spacing: -.025em; margin: 0 0 .4em; }
+      .prose h2 { font-size: 1.5rem; letter-spacing: -.02em; margin: 1.8em 0 .6em; }
+      .prose p { color: #33302b; }
+      .lead { font-size: 1.15rem; color: var(--muted); max-width: 46rem; }
+      section.pad { padding: 44px 0; }
+
+      /* Hero */
+      .hero { background: linear-gradient(180deg, var(--accent-soft), var(--bg)); border-bottom: 1px solid var(--border); }
+      .hero .wrap { padding-top: 56px; padding-bottom: 48px; }
+      .eyebrow { display: inline-block; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent-dark); background: #fff; border: 1px solid var(--border); padding: 5px 11px; border-radius: 999px; margin-bottom: 16px; }
+
+      /* Category grid */
+      .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+      .cat-card { display: flex; flex-direction: column; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; text-decoration: none; color: var(--ink); transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+      .cat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: #e3b48f; }
+      .cat-card .ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 11px; background: var(--accent-soft); color: var(--accent-dark); }
+      .cat-card .ico svg { width: 24px; height: 24px; }
+      .cat-card h3 { margin: 6px 0 0; font-size: 1.12rem; }
+      .cat-card p { margin: 0; color: var(--muted); font-size: .95rem; }
+      .cat-card .go { margin-top: auto; padding-top: 8px; color: var(--accent-dark); font-weight: 700; font-size: .9rem; }
+
+      /* Product picks */
+      .picks { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 18px; }
+      .pick { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; }
+      .pick .rank { grid-row: 1 / span 4; width: 40px; height: 40px; border-radius: 10px; background: var(--accent); color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 1.1rem; }
+      .pick .rank.alt { background: #7c5c46; }
+      .pick-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+      .pick h3 { margin: 0; font-size: 1.2rem; letter-spacing: -.01em; }
+      .badge { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--accent-dark); background: var(--accent-soft); border: 1px solid #f4d3ba; padding: 3px 9px; border-radius: 999px; }
+      .rating { color: var(--star); font-size: .95rem; letter-spacing: .05em; }
+      .rating span { color: var(--muted); font-size: .85rem; }
+      .pick .blurb { margin: 4px 0 0; color: #33302b; }
+      .pros { margin: 8px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .9rem; color: var(--muted); }
+      .pros li { display: inline-flex; align-items: center; gap: 6px; }
+      .pros li::before { content: "✓"; color: var(--accent); font-weight: 800; }
+      .btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; font-size: .95rem; padding: 10px 18px; border-radius: 10px; transition: background .12s ease; width: fit-content; }
+      .btn:hover { background: var(--accent-dark); }
+      .btn::after { content: "↗"; font-weight: 600; }
+      .note { font-size: .9rem; color: var(--muted); font-style: italic; margin-top: 20px; }
+      .breadcrumb { font-size: .85rem; color: var(--muted); margin: 0 0 6px; }
+      .breadcrumb a { color: var(--muted); text-decoration: none; }
+      .breadcrumb a:hover { color: var(--accent-dark); }
+
+      /* Footer */
+      .site-footer { background: var(--surface); border-top: 1px solid var(--border); margin-top: 48px; }
+      .site-footer .wrap { padding: 32px 20px; }
+      .disclosure { font-size: .9rem; color: var(--muted); max-width: 55rem; }
+      .disclosure b { color: var(--ink); }
+      .foot-links { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 16px 0 0; font-size: .9rem; }
+      .foot-links a { color: var(--muted); text-decoration: none; }
+      .foot-links a:hover { color: var(--accent-dark); }
+      .copyright { margin: 14px 0 0; font-size: .85rem; color: var(--muted); }
+
+      @media (max-width: 560px) {
+        body { font-size: 16px; }
+        .pick { grid-template-columns: 1fr; }
+        .pick .rank { grid-row: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">
+          <Fragment set:html={icon('spark')} />
+          <span>Bright <b>Picks</b></span>
+        </a>
+        <nav class="main">
+          <a href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a>
+          {CATEGORIES.map((c) => (
+            <a href={`/category/${c.slug}/`} aria-current={isActive(`/category/${c.slug}/`) ? 'page' : undefined}>{c.name}</a>
+          ))}
+          <a href="/about/" aria-current={isActive('/about/') ? 'page' : undefined}>About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="disclosure">
+          <b>Affiliate disclosure:</b> As an Amazon Associate we earn from qualifying purchases.
+          Bright Picks contains affiliate links, and we may earn a commission at no extra cost to you.
+          <a href="/disclosure/">Learn more</a>.
+        </p>
+        <nav class="foot-links">
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+          <a href="/disclosure/">Disclosure</a>
+          <a href="/privacy/">Privacy</a>
+        </nav>
+        <p class="copyright">© {year} Bright Picks. Prices and availability may change — always check on Amazon before buying.</p>
+      </div>
+    </footer>
+  </body>
+</html>
