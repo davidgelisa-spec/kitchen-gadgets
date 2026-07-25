@@ -2,6 +2,7 @@
 import { CATEGORIES } from '../lib/categories';
 import { icon } from '../lib/icons';
 import { sisterSites } from '../lib/network';
+import Analytics from '../components/Analytics.astro';
 
 interface Props {
   title: string;
@@ -49,6 +50,7 @@ const ogImage = new URL('/og.png', SITE_URL).href;
       name: 'Bright Picks — Kitchen Gadgets',
       url: 'https://kitchen-gadgets-1cp.pages.dev',
     })} />
+    <Analytics />
     <style is:global>
       :root {
         --bg: #fffdf9;

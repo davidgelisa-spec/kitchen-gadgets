@@ -1,0 +1,97 @@
+---
+// Portfolio-wide Google Analytics 4 + outbound affiliate/bounty click tracking.
+// ---------------------------------------------------------------------------
+// This file is IDENTICAL across every Bright Picks site. The only per-site
+// difference lives in src/lib/analytics.ts (SITE_KEY). It renders NOTHING when
+// GA_MEASUREMENT_ID is empty, so the site loads no scripts and sets no cookies
+// until analytics is switched on. See MEASUREMENT-MAP.md for the event schema.
+import { GA_MEASUREMENT_ID, SITE_KEY, analyticsEnabled } from '../lib/analytics';
+---
+{analyticsEnabled && (
+  <Fragment>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+    <script is:inline define:vars={{ gaId: GA_MEASUREMENT_ID, siteKey: SITE_KEY }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      // page_view carries the `site` dimension so all sites are comparable in one property.
+      gtag('config', gaId, { site: siteKey });
+
+      // ---- Outbound affiliate + bounty click tracking -----------------------
+      // Delegated listener → fires `affiliate_click` on any outbound Amazon link
+      // and `bounty_click` on membership-bounty CTAs. New links are covered
+      // automatically with no per-component wiring.
+      (function () {
+        var tracked = null;
+        function list() {
+          if (!tracked) {
+            tracked = Array.prototype.slice.call(
+              document.querySelectorAll('a[href*="amazon."], a[data-cta-type="bounty"]')
+            );
+          }
+          return tracked;
+        }
+        function pageType(p) {
+          if (!p || p === '/') return 'home';
+          if (/^\/category\//.test(p)) return 'category';
+          if (/^\/reviews?\//.test(p)) return 'review';
+          if (/^\/(about|privacy|disclosure|methodology|how-it-works|contact)\/?$/.test(p)) return 'info';
+          return 'other';
+        }
+        function categoryOf(a, p) {
+          var el = a.closest('[data-category]');
+          if (el) return el.getAttribute('data-category');
+          var m = p.match(/^\/category\/([^/]+)/);
+          return m ? m[1] : '';
+        }
+        function tagOf(u) {
+          try { return new URL(u).searchParams.get('tag') || ''; } catch (e) { return ''; }
+        }
+        function nameOf(a) {
+          var card = a.closest('[data-item], .deal, .pick, .cat-card, .tile, tr, li');
+          if (card) {
+            var d = card.getAttribute && card.getAttribute('data-item');
+            if (d) return d;
+            var h = card.querySelector && card.querySelector('h1,h2,h3,.c-name');
+            if (h && h.textContent) return h.textContent.trim().slice(0, 120);
+          }
+          return (a.textContent || '').trim().slice(0, 120);
+        }
+        function send(a) {
+          var href = a.href;
+          if (!href) return;
+          var host;
+          try { host = new URL(href).hostname; } catch (e) { return; }
+          var isBounty = a.getAttribute('data-cta-type') === 'bounty';
+          var isAmazon = /(^|\.)amazon\./i.test(host);
+          if (!isBounty && !isAmazon) return;
+          var path = location.pathname;
+          var params = {
+            site: siteKey,
+            page_path: path,
+            page_type: pageType(path),
+            cta_position: (list().indexOf(a) + 1) || 0,
+            item_name: nameOf(a),
+            link_url: href,
+            link_domain: host,
+            affiliate_tag: tagOf(href)
+          };
+          var cat = categoryOf(a, path);
+          if (cat) params.category = cat;
+          if (isBounty) {
+            params.bounty_program = a.getAttribute('data-bounty-program') || nameOf(a);
+            gtag('event', 'bounty_click', params);
+          } else {
+            gtag('event', 'affiliate_click', params);
+          }
+        }
+        function onClick(e) {
+          var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+          if (a) send(a);
+        }
+        document.addEventListener('click', onClick, true);
+        document.addEventListener('auxclick', function (e) { if (e.button === 1) onClick(e); }, true);
+      })();
+    </script>
+  </Fragment>
+)}
