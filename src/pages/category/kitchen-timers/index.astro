@@ -1,6 +1,7 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import ProductPicks from '../../../components/ProductPicks.astro';
+import CategoryNav from '../../../components/CategoryNav.astro';
 import type { Product } from '../../../components/ProductPicks.astro';
 
 const products: Product[] = [
@@ -39,6 +40,7 @@ const products: Product[] = [
       <p class="lead">A good timer is the cheapest upgrade your cooking will ever get. Loud enough to hear, clear enough to read at a glance — here are three that get it right.</p>
       <ProductPicks products={products} />
       <p class="note">Prices and availability change often. Always double-check the current price and delivery options on Amazon before buying.</p>
+      <CategoryNav slug="kitchen-timers" dealsQuery="kitchen timer" dealsLabel="kitchen timer" />
     </div>
   </section>
 </Layout>

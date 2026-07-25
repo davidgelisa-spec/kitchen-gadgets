@@ -1,0 +1,32 @@
+---
+// Shared "bottom of a category page" block: a high-intent outbound Amazon deals
+// CTA plus cross-links to the other kitchen categories, so no category page is a
+// dead-end and every one has a direct deals link.
+import { amazonCategoryDeals } from '../lib/affiliate';
+import { CATEGORIES } from '../lib/categories';
+import { icon } from '../lib/icons';
+
+interface Props {
+  slug: string;
+  dealsQuery: string;
+  dealsLabel: string;
+}
+const { slug, dealsQuery, dealsLabel } = Astro.props as Props;
+const others = CATEGORIES.filter((c) => c.slug !== slug);
+---
+
+<p class="cta-band" style="margin-top: 22px;">
+  <a class="btn" href={amazonCategoryDeals(dealsQuery)} rel="sponsored nofollow noopener" target="_blank">See today's {dealsLabel} deals on Amazon</a>
+</p>
+
+<h2 style="margin-top: 40px;">More kitchen categories</h2>
+<div class="cat-grid" style="margin-top: 16px;">
+  {others.map((c) => (
+    <a class="cat-card" href={`/category/${c.slug}/`}>
+      <span class="ico"><Fragment set:html={icon(c.icon)} /></span>
+      <h3>{c.name}</h3>
+      <p>{c.tagline}</p>
+      <span class="go">See our picks →</span>
+    </a>
+  ))}
+</div>

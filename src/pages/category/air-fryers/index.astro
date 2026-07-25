@@ -1,6 +1,7 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import ProductPicks from '../../../components/ProductPicks.astro';
+import CategoryNav from '../../../components/CategoryNav.astro';
 import type { Product } from '../../../components/ProductPicks.astro';
 
 const products: Product[] = [
@@ -17,7 +18,7 @@ const products: Product[] = [
     badge: 'Best value',
     rating: 4.4,
     blurb: 'A no-frills 4L fryer that does the important thing well for noticeably less money. A simple dial, a roomy basket and reliable results.',
-    pros: ['4L capacity', 'Lowest price here', 'Dial controls — no fuss'],
+    pros: ['4L capacity', 'Best value pick', 'Dial controls — no fuss'],
     query: 'Tower T17021 Vortx air fryer 4L',
   },
   {
@@ -39,6 +40,7 @@ const products: Product[] = [
       <p class="lead">An air fryer is the fastest route to crispy food with a fraction of the oil. These three hit the sweet spot of price, capacity and easy cleaning for a typical home kitchen.</p>
       <ProductPicks products={products} />
       <p class="note">Prices and availability change often. Always double-check the current price and delivery options on Amazon before buying.</p>
+      <CategoryNav slug="air-fryers" dealsQuery="air fryer" dealsLabel="air fryer" />
     </div>
   </section>
 </Layout>

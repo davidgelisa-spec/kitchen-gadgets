@@ -1,6 +1,7 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import ProductPicks from '../../../components/ProductPicks.astro';
+import CategoryNav from '../../../components/CategoryNav.astro';
 import type { Product } from '../../../components/ProductPicks.astro';
 
 const products: Product[] = [
@@ -39,6 +40,7 @@ const products: Product[] = [
       <p class="lead">The cheapest way to make a small kitchen feel bigger is to use the space you already have properly. These three tidy up drawers, cupboards and the fridge.</p>
       <ProductPicks products={products} />
       <p class="note">Prices and availability change often. Always double-check the current price and delivery options on Amazon before buying.</p>
+      <CategoryNav slug="organizers" dealsQuery="kitchen storage organiser" dealsLabel="organiser" />
     </div>
   </section>
 </Layout>

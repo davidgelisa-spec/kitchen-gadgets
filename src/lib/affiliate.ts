@@ -19,6 +19,16 @@ export function amazonSearch(query: string): string {
 }
 
 /**
+ * A deal-oriented Amazon UK search within a niche (e.g. "air fryer"), tagged.
+ * The rh=p_n_deal_type filter scopes results to items currently on a deal. Used
+ * for high-intent "see today's deals" CTAs — no price/% is quoted, so it can't
+ * go stale.
+ */
+export function amazonCategoryDeals(query: string): string {
+  return `${AMAZON_UK}/s?k=${encodeURIComponent(query)}&rh=p_n_deal_type&tag=${ASSOCIATES_TAG}`;
+}
+
+/**
  * Build an Amazon UK affiliate link to a specific product by ASIN.
  * Prefer this over amazonSearch once a real, verified ASIN is known.
  */

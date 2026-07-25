@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { CATEGORIES } from '../lib/categories';
+import { amazonCategoryDeals } from '../lib/affiliate';
 import { icon } from '../lib/icons';
 import { weeklyRotate, updatedLabel } from '../lib/freshness';
 
@@ -15,6 +16,9 @@ const updated = updatedLabel();
       <span class="eyebrow">Bright Picks · Kitchen</span>
       <h1>The best budget kitchen gadgets, without the guesswork.</h1>
       <p class="lead">We do the digging so you don't have to — clear, no-nonsense picks for the gadgets that actually earn their place on your worktop. Updated regularly, always honest about the trade-offs.</p>
+      <p class="hero-actions" style="margin-top:18px;">
+        <a class="btn" href={amazonCategoryDeals('kitchen gadgets')} rel="sponsored nofollow noopener" target="_blank">See today's kitchen deals on Amazon</a>
+      </p>
       <p class="updated">Picks reviewed and reordered weekly · <b>Last updated {updated}</b></p>
     </div>
   </section>

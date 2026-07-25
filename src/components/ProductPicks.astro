@@ -27,7 +27,7 @@ function stars(rating: number): string {
         <h3>{p.name}</h3>
         {p.badge && <span class="badge">{p.badge}</span>}
       </div>
-      <div class="rating">{stars(p.rating)} <span>{p.rating.toFixed(1)} / 5</span></div>
+      <div class="rating" title="Our own editorial score — not an Amazon customer rating"><span class="rating-label">Our score</span> {stars(p.rating)} <span>{p.rating.toFixed(1)} / 5</span></div>
       <p class="blurb">{p.blurb}</p>
       <ul class="pros">
         {p.pros.map((pro) => <li>{pro}</li>)}
@@ -36,3 +36,4 @@ function stars(rating: number): string {
     </li>
   ))}
 </ol>
+<p class="score-note" style="font-size:.85rem;opacity:.7;margin-top:10px;">Scores are our own editorial assessment, not Amazon customer ratings.</p>
