@@ -3,11 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import { CATEGORIES } from '../lib/categories';
 import { amazonCategoryDeals } from '../lib/affiliate';
 import { icon } from '../lib/icons';
-import { weeklyRotate, updatedLabel } from '../lib/freshness';
+import { weeklyRotate } from '../lib/freshness';
 
 // Reorder the category grid each week so the homepage stays fresh (roadmap §3).
 const categoriesThisWeek = weeklyRotate(CATEGORIES);
-const updated = updatedLabel();
 ---
 
 <Layout title="Bright Picks — Budget Kitchen Gadget Reviews" description="Honest, budget-friendly reviews of the best kitchen gadgets — air fryers, blenders, coffee machines, timers and organisers.">
@@ -19,7 +18,7 @@ const updated = updatedLabel();
       <p class="hero-actions" style="margin-top:18px;">
         <a class="btn" href={amazonCategoryDeals('kitchen gadgets')} rel="sponsored nofollow noopener" target="_blank">See today's kitchen deals on Amazon</a>
       </p>
-      <p class="updated">Picks reviewed and reordered weekly · <b>Last updated {updated}</b></p>
+      <p class="updated">Picks reviewed and reordered weekly</p>
     </div>
   </section>
 

@@ -27,7 +27,15 @@ export function weeklyRotate<T>(arr: T[], seed: number = weekSeed()): T[] {
   return arr.slice(off).concat(arr.slice(0, off));
 }
 
-/** Human "last updated" label, e.g. "24 July 2026". */
+/**
+ * DEPRECATED for user-facing "last updated" text (VSC-013, 2026-07-29).
+ * This returns the BUILD date, not the date anything was actually re-checked,
+ * so printing it told visitors a page had been refreshed when only a rebuild
+ * had run. Every site-facing use was removed. Do not reintroduce it into page
+ * copy: show a date only when it comes from a real data refresh (the pattern
+ * deals-aggregator and product-comparison use, reading generatedAt from the
+ * dataset). Kept only because buildDate() below shares this module.
+ */
 export function updatedLabel(d: Date = new Date()): string {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
