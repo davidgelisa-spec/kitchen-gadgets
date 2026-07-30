@@ -4,7 +4,6 @@ import { amazonSearch } from '../lib/affiliate';
 export interface Product {
   name: string;
   badge?: string;
-  rating: number;
   blurb: string;
   pros: string[];
   query: string; // Amazon search query for the affiliate link
@@ -12,22 +11,19 @@ export interface Product {
 interface Props { products: Product[]; }
 const { products } = Astro.props;
 
-function stars(rating: number): string {
-  const full = Math.floor(rating);
-  const half = rating - full >= 0.5;
-  return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(5 - full - (half ? 1 : 0));
-}
 ---
 
 <ol class="picks">
-  {products.map((p, i) => (
+  {products.map((p) => (
     <li class="pick">
-      <div class={`rank${i === 0 ? '' : ' alt'}`}>{i + 1}</div>
       <div class="pick-head">
         <h3>{p.name}</h3>
         {p.badge && <span class="badge">{p.badge}</span>}
       </div>
-      <div class="rating" title="Our own editorial score — not an Amazon customer rating"><span class="rating-label">Our score</span> {stars(p.rating)} <span>{p.rating.toFixed(1)} / 5</span></div>
+      <div class="pick-basis">
+        <span class="basis-label">Research-based pick</span>
+        <a href="/about/#how-we-pick">how we choose</a>
+      </div>
       <p class="blurb">{p.blurb}</p>
       <ul class="pros">
         {p.pros.map((pro) => <li>{pro}</li>)}
@@ -36,4 +32,4 @@ function stars(rating: number): string {
     </li>
   ))}
 </ol>
-<p class="score-note" style="font-size:.85rem;opacity:.7;margin-top:10px;">Scores are our own editorial assessment, not Amazon customer ratings.</p>
+<p class="score-note" style="font-size:.85rem;opacity:.7;margin-top:10px;">We have not physically tested these products. Picks come from researching published specifications, customer feedback, warranty terms and professional reviews — the labels above are our recommendation, not a score from a rating system. <a href="/about/#how-we-pick">How we choose</a>.</p>

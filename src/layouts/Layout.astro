@@ -131,15 +131,18 @@ const ogImageHeight = image ? 1500 : 630;
       .cat-card .go { margin-top: auto; padding-top: 8px; color: var(--accent-dark); font-weight: 700; font-size: .9rem; }
 
       /* Product picks */
-      .picks { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 18px; }
-      .pick { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; }
-      .pick .rank { grid-row: 1 / span 4; width: 40px; height: 40px; border-radius: 10px; background: var(--accent); color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 1.1rem; }
-      .pick .rank.alt { background: #7c5c46; }
+      /* Rank is a CSS counter, not markup: an <ol> already conveys position, so a
+         printed <div>1</div> duplicated it for assistive tech (VSC-018). */
+      .picks { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 18px; counter-reset: pick; }
+      .pick { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; counter-increment: pick; }
+      .pick::before { content: counter(pick); grid-row: 1 / span 5; width: 40px; height: 40px; border-radius: 10px; background: #7c5c46; color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 1.1rem; }
+      .pick:first-child::before { background: var(--accent); }
       .pick-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
       .pick h3 { margin: 0; font-size: 1.2rem; letter-spacing: -.01em; }
       .badge { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--accent-dark); background: var(--accent-soft); border: 1px solid #f4d3ba; padding: 3px 9px; border-radius: 999px; }
-      .rating { color: var(--star); font-size: .95rem; letter-spacing: .05em; }
-      .rating span { color: var(--muted); font-size: .85rem; }
+      .pick-basis { font-size: .85rem; color: var(--muted); display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+      .pick-basis .basis-label { font-weight: 700; color: var(--accent-dark); }
+      .pick-basis a { color: var(--muted); }
       .pick .blurb { margin: 4px 0 0; color: #33302b; }
       .pros { margin: 8px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .9rem; color: var(--muted); }
       .pros li { display: inline-flex; align-items: center; gap: 6px; }
@@ -178,7 +181,7 @@ const ogImageHeight = image ? 1500 : 630;
       @media (max-width: 560px) {
         body { font-size: 16px; }
         .pick { grid-template-columns: 1fr; }
-        .pick .rank { grid-row: auto; }
+        .pick::before { grid-row: auto; }
       }
     </style>
   </head>
