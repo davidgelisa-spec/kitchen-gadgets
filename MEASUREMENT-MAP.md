@@ -39,6 +39,12 @@ comparable. Every event carries a `site` parameter to split the portfolio apart.
 | `affiliate_click` | a visitor clicks any outbound **Amazon** product/search/deal link  | anywhere an Amazon link appears |
 | `bounty_click`    | a visitor clicks a **membership bounty** CTA (Prime/Audible/Kindle)| homepages with the Bounties block (deals-aggregator, best-bargain-picks) |
 
+`guide` covers the /best/<slug>/ buying guides on bright-picks.com — added
+2026-08-09 (VSC-045) after COWORK-020 found guide clicks reporting as `other`.
+Only deals-aggregator has /best/ routes today; the rule ships in all five repos
+so this component stays byte-identical everywhere, which is the invariant that
+makes the portfolio comparable in one property.
+
 Detection is automatic: any `<a>` whose host contains `amazon.` → `affiliate_click`;
 any `<a data-cta-type="bounty">` → `bounty_click`. New links are covered with no
 extra wiring.
@@ -48,7 +54,7 @@ extra wiring.
 |-----------------|------------------------------------------------------|
 | `site`          | which site (SITE_KEY) — the portfolio dimension      |
 | `page_path`     | pathname the click happened on                       |
-| `page_type`     | home / category / review / info / other (from path)  |
+| `page_type`     | home / guide / category / review / info / other (path)|
 | `category`      | category slug (from URL, or nearest `[data-category]`)|
 | `cta_position`  | ordinal of the link on the page (1 = first)          |
 | `item_name`     | nearest product/card heading text                    |

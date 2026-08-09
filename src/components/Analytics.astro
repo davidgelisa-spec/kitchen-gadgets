@@ -34,6 +34,11 @@ import { GA_MEASUREMENT_ID, SITE_KEY, analyticsEnabled } from '../lib/analytics'
         function pageType(p) {
           if (!p || p === '/') return 'home';
           if (/^\/category\//.test(p)) return 'category';
+          // Buying guides live at /best/<slug>/ and are the site's whole
+          // commercial proposition, so they need their own value rather than
+          // falling through to 'other' (COWORK-020 found guide clicks reporting
+          // as 'other', which made the highest-intent surface unreadable in GA4).
+          if (/^\/best\//.test(p)) return 'guide';
           if (/^\/reviews?\//.test(p)) return 'review';
           if (/^\/(about|privacy|disclosure|methodology|how-it-works|contact)\/?$/.test(p)) return 'info';
           return 'other';
